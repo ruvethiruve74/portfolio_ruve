@@ -48,6 +48,9 @@ const projects = [
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home");
+  const [showEmailFloat, setShowEmailFloat] = useState(false);
+  const [showEmailPopup, setShowEmailPopup] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", feedback: "" });
   const sectionsRef = useRef({});
 
   const navItems = [
@@ -73,7 +76,20 @@ export default function Portfolio() {
       { threshold: 0.4 }
     );
     Object.values(sectionsRef.current).forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
+
+    const onScroll = () => {
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight - windowHeight;
+      setShowEmailFloat(scrollTop > documentHeight * 0.5);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
@@ -161,6 +177,127 @@ export default function Portfolio() {
           transform: scaleX(0.7);
           opacity: 0.7;
         }
+        .email-float {
+          position: fixed;
+          left: 50%;
+          bottom: clamp(18px, 3vw, 30px);
+          transform: translateX(-50%);
+          z-index: 80;
+          transition: opacity 0.35s ease, transform 0.35s ease;
+          transform-style: preserve-3d;
+        }
+        .email-float.hidden {
+          opacity: 0;
+          pointer-events: none;
+          transform: translateX(-50%) translateY(24px) scale(0.9);
+        }
+        .email-float.visible {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0) scale(1);
+        }
+        .email-float::before {
+          content: "";
+          position: absolute;
+          inset: -10px;
+          border-radius: 999px;
+          background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 66%);
+          filter: blur(18px);
+          transform: translateZ(-12px);
+        }
+        .email-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 68px;
+          height: 68px;
+          border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.24);
+          background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+          box-shadow: 0 14px 28px rgba(10, 6, 40, 0.38), inset 0 1px 0 rgba(255,255,255,0.2);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          cursor: pointer;
+          animation: popIn 0.6s cubic-bezier(0.22,1,0.36,1), floatPulse 2.6s ease-in-out infinite 0.6s;
+          transform: rotateX(8deg) rotateY(-8deg);
+        }
+        .email-btn:hover {
+          transform: translateY(-3px) rotateX(8deg) rotateY(-8deg) scale(1.03);
+          box-shadow: 0 18px 34px rgba(10, 6, 40, 0.45), inset 0 1px 0 rgba(255,255,255,0.24);
+        }
+        .email-overlay {
+          position: fixed;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          z-index: 95;
+          background: rgba(3, 6, 24, 0.72);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          animation: overlayFade 0.25s ease;
+        }
+        .email-modal {
+          width: min(92vw, 420px);
+          border-radius: 22px;
+          padding: 24px;
+          border: 1px solid rgba(255,255,255,0.16);
+          background: linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.07));
+          box-shadow: 0 24px 60px rgba(2, 6, 24, 0.45);
+          backdrop-filter: blur(18px);
+          -webkit-backdrop-filter: blur(18px);
+          color: #F3ECFF;
+          animation: modalPop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .email-modal input,
+        .email-modal textarea {
+          width: 100%;
+          border: 1px solid rgba(255,255,255,0.16);
+          border-radius: 12px;
+          padding: 10px 12px;
+          font-size: 14px;
+          color: #F3ECFF;
+          background: rgba(255,255,255,0.06);
+          outline: none;
+          margin-top: 6px;
+        }
+        .email-modal textarea {
+          min-height: 92px;
+          resize: vertical;
+        }
+        .email-modal button {
+          border: 0;
+          border-radius: 999px;
+          padding: 10px 16px;
+          cursor: pointer;
+          font-weight: 600;
+        }
+        .email-modal .send-btn {
+          background: linear-gradient(135deg, #C9B8FF, #8FA9FF);
+          color: #070812;
+        }
+        .email-modal .close-btn {
+          background: rgba(255,255,255,0.08);
+          color: #fff;
+        }
+        @keyframes overlayFade {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes modalPop {
+          0% { opacity: 0; transform: scale(0.94) translateY(10px); }
+          60% { opacity: 1; transform: scale(1.02) translateY(-3px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes popIn {
+          0% { opacity: 0; transform: scale(0.7) rotateX(8deg) rotateY(-8deg); }
+          60% { opacity: 1; transform: scale(1.06) rotateX(8deg) rotateY(-8deg); }
+          100% { opacity: 1; transform: scale(1) rotateX(8deg) rotateY(-8deg); }
+        }
+        @keyframes floatPulse {
+          0%, 100% { transform: translateY(0) rotateX(8deg) rotateY(-8deg); }
+          50% { transform: translateY(-6px) rotateX(8deg) rotateY(-8deg); }
+        }
         @keyframes blink { 50% { border-color: transparent; } }
         @keyframes drift {
           0% { transform: translate3d(0, 0, 0) scale(1); }
@@ -231,6 +368,57 @@ export default function Portfolio() {
       </div>
       <div ref={(el) => (sectionsRef.current.contact = el)}>
         <ContactSection />
+      </div>
+
+      {showEmailPopup && (
+        <div className="email-overlay" onClick={() => setShowEmailPopup(false)}>
+          <div className="email-modal" onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+              <div style={{ fontSize: "13px", letterSpacing: "0.24em", textTransform: "uppercase", color: "#A99BEA" }}>Contact</div>
+              <button className="close-btn" onClick={() => setShowEmailPopup(false)} aria-label="Close form">×</button>
+            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const subject = encodeURIComponent(`Portfolio Feedback from ${formData.name || "Anonymous"}`);
+                const body = encodeURIComponent(`Name: ${formData.name || ""}\nEmail: ${formData.email || ""}\n\nFeedback:\n${formData.feedback || ""}`);
+                window.location.href = `mailto:ruvethiruve74@gmail.com?subject=${subject}&body=${body}`;
+                setShowEmailPopup(false);
+              }}
+            >
+              <div style={{ marginBottom: "10px" }}>
+                <label style={{ fontSize: "13px", color: "#D8CFFF" }}>Name</label>
+                <input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Your name" required />
+              </div>
+              <div style={{ marginBottom: "10px" }}>
+                <label style={{ fontSize: "13px", color: "#D8CFFF" }}>Email</label>
+                <input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="Your email" required />
+              </div>
+              <div style={{ marginBottom: "14px" }}>
+                <label style={{ fontSize: "13px", color: "#D8CFFF" }}>Feedback for my portfolio</label>
+                <textarea value={formData.feedback} onChange={(e) => setFormData({ ...formData, feedback: e.target.value })} placeholder="Share your feedback..." required />
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+                <button type="button" className="close-btn" onClick={() => setShowEmailPopup(false)}>Cancel</button>
+                <button type="submit" className="send-btn">Send</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      <div className={`email-float ${showEmailFloat ? "visible" : "hidden"}`}>
+        <button
+          aria-label="Email me"
+          className="email-btn"
+          onClick={() => setShowEmailPopup(true)}
+          style={{ color: "#F5ECFF", textDecoration: "none" }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="M3 7l9 7 9-7" />
+          </svg>
+        </button>
       </div>
     </div>
   );

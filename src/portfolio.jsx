@@ -84,7 +84,7 @@ export default function Portfolio() {
         fontFamily: "'Inter', sans-serif",
         color: "#EDEBFF",
         background:
-          "radial-gradient(ellipse 80% 60% at 20% 0%, #241a52 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 100% 20%, #1a2a5c 0%, transparent 50%), radial-gradient(ellipse 90% 70% at 50% 100%, #2c1547 0%, transparent 60%), #070812",
+          "radial-gradient(ellipse 72% 56% at 12% 0%, rgba(121,95,255,0.38) 0%, transparent 58%), radial-gradient(ellipse 60% 44% at 92% 16%, rgba(55,177,255,0.26) 0%, transparent 55%), radial-gradient(ellipse 80% 70% at 50% 100%, rgba(214,129,255,0.24) 0%, transparent 65%), linear-gradient(135deg, #06070d 0%, #090b16 45%, #05050b 100%)",
         position: "relative",
         overflowX: "hidden",
       }}
@@ -99,7 +99,40 @@ export default function Portfolio() {
         .nav-link { position: relative; cursor: pointer; transition: color 0.3s ease, transform 0.2s ease; }
         .nav-link:hover { color: #C9B8FF; transform: translateY(-1px); }
         .nav-link.active { color: #FFFFFF; }
-        .orb { position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none; }
+        .orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(70px);
+          pointer-events: none;
+          opacity: 0.95;
+          mix-blend-mode: screen;
+          animation: drift 18s ease-in-out infinite alternate;
+        }
+        .mesh {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05) 0 1px, transparent 1px), radial-gradient(circle at 80% 30%, rgba(255,255,255,0.04) 0 1px, transparent 1px);
+          background-size: 180px 180px, 240px 240px;
+          opacity: 0.35;
+          pointer-events: none;
+          mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 90%);
+        }
+        .bubble-layer {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          overflow: hidden;
+          opacity: 0.78;
+        }
+        .bubble {
+          position: absolute;
+          border-radius: 50%;
+          background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0.12) 24%, rgba(129,195,255,0.08) 55%, transparent 72%);
+          border: 1px solid rgba(255,255,255,0.16);
+          box-shadow: inset 0 1px 10px rgba(255,255,255,0.12), 0 0 18px rgba(120,180,255,0.1);
+          filter: blur(0.4px);
+          animation: bubbleFloat 12s ease-in-out infinite;
+        }
         .glow-btn { transition: transform 0.25s ease, box-shadow 0.25s ease; }
         .glow-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(139,92,246,0.45); }
         .proj-card { transition: transform 0.35s ease, border-color 0.35s ease; }
@@ -129,6 +162,14 @@ export default function Portfolio() {
           opacity: 0.7;
         }
         @keyframes blink { 50% { border-color: transparent; } }
+        @keyframes drift {
+          0% { transform: translate3d(0, 0, 0) scale(1); }
+          100% { transform: translate3d(30px, -40px, 0) scale(1.08); }
+        }
+        @keyframes bubbleFloat {
+          0%, 100% { transform: translate3d(0, 0, 0) scale(0.95); }
+          50% { transform: translate3d(18px, -28px, 0) scale(1.08); }
+        }
         @keyframes headingGlow {
           from { text-shadow: 0 0 10px rgba(255,255,255,0.2), 0 0 20px rgba(139,92,246,0.2); }
           to { text-shadow: 0 0 22px rgba(255,255,255,0.4), 0 0 40px rgba(139,92,246,0.35); }
@@ -137,9 +178,26 @@ export default function Portfolio() {
         a { color: inherit; text-decoration: none; }
       `}</style>
 
-      <div className="orb" style={{ width: 420, height: 420, top: -140, left: -120, background: "radial-gradient(circle, rgba(139,92,246,0.45), transparent 70%)" }} />
-      <div className="orb" style={{ width: 380, height: 380, top: 260, right: -160, background: "radial-gradient(circle, rgba(56,189,248,0.28), transparent 70%)" }} />
-      <div className="orb" style={{ width: 340, height: 340, bottom: 40, left: "35%", background: "radial-gradient(circle, rgba(192,132,252,0.30), transparent 70%)" }} />
+      <div className="mesh" />
+      <div className="bubble-layer">
+        {Array.from({ length: 20 }).map((_, index) => (
+          <div
+            key={index}
+            className="bubble"
+            style={{
+              width: `${28 + (index % 6) * 10}px`,
+              height: `${28 + (index % 6) * 10}px`,
+              left: `${6 + (index * 4) % 90}%`,
+              top: `${8 + (index * 7) % 82}%`,
+              animationDelay: `${-index * 0.8}s`,
+              opacity: 0.45 + (index % 4) * 0.11,
+            }}
+          />
+        ))}
+      </div>
+      <div className="orb" style={{ width: 460, height: 460, top: -150, left: -140, background: "radial-gradient(circle, rgba(142,104,255,0.56), transparent 72%)" }} />
+      <div className="orb" style={{ width: 380, height: 380, top: 240, right: -180, background: "radial-gradient(circle, rgba(62,174,255,0.34), transparent 72%)", animationDelay: "-6s" }} />
+      <div className="orb" style={{ width: 340, height: 340, bottom: 55, left: "34%", background: "radial-gradient(circle, rgba(220,138,255,0.28), transparent 72%)", animationDelay: "-10s" }} />
 
       <nav style={{ position: "sticky", top: 0, zIndex: 50, display: "flex", justifyContent: "center", padding: "18px 20px" }}>
         <GlassCard style={{ display: "flex", alignItems: "center", gap: "clamp(10px, 2vw, 28px)", padding: "10px 22px", borderRadius: "999px", flexWrap: "wrap", justifyContent: "center" }}>

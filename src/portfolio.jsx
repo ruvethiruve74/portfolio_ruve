@@ -76,6 +76,59 @@ function Reveal({ children, delay = 0, className = "" }) {
     </div>
   );
 }
+
+function AnimatedRoleText({ text, className = "", style = {} }) {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isComplete, setIsComplete] = useState(false);
+
+  useEffect(() => {
+    let index = 0;
+    let active = true;
+    const timer = window.setInterval(() => {
+      if (!active) return;
+      index += 1;
+      setDisplayedText(text.slice(0, index));
+      if (index >= text.length) {
+        clearInterval(timer);
+        setIsComplete(true);
+      }
+    }, 45);
+
+    return () => {
+      active = false;
+      clearInterval(timer);
+    };
+  }, [text]);
+
+  return (
+    <p
+      className={`typing-text ${className}`.trim()}
+      style={{
+        display: "inline-block",
+        minHeight: "1.7em",
+        fontSize: "13px",
+        letterSpacing: "0.25em",
+        lineHeight: 1.6,
+        color: "#8B7FD9",
+        textTransform: "uppercase",
+        marginBottom: "18px",
+        ...style,
+      }}
+    >
+      <span
+        style={{
+          background: "linear-gradient(135deg, #FFFFFF 0%, #C9B8FF 50%, #8FA9FF 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          fontWeight: 600,
+        }}
+      >
+        {displayedText}
+      </span>
+      {!isComplete && <span className="typing-cursor" />}
+    </p>
+  );
+}
  
 function GlassCard({ children, style = {}, className = "" }) {
   return (
@@ -153,6 +206,8 @@ export default function Portfolio() {
         .proj-card:hover { transform: translateY(-6px); border-color: rgba(196,158,255,0.5) !important; }
         .skill-pill { transition: transform 0.2s ease, background 0.2s ease; }
         .skill-pill:hover { transform: translateY(-2px) scale(1.04); background: rgba(139,92,246,0.28) !important; }
+        .typing-cursor { display: inline-block; width: 8px; margin-left: 3px; border-right: 2px solid #F5EBFF; animation: blink 0.8s steps(1) infinite; vertical-align: middle; }
+        @keyframes blink { 50% { border-color: transparent; } }
         ::selection { background: rgba(139,92,246,0.5); }
         a { color: inherit; text-decoration: none; }
       `}</style>
@@ -245,9 +300,7 @@ export default function Portfolio() {
           </div>
         </Reveal>
         <Reveal delay={40}>
-          <p style={{ fontSize: "13px", letterSpacing: "0.25em", color: "#8B7FD9", textTransform: "uppercase", marginBottom: "18px" }}>
-            Full Stack Developer · HND in Computing
-          </p>
+          <AnimatedRoleText text="Full Stack Developer · HND in Computing" />
         </Reveal>
         <Reveal delay={100}>
           <h1

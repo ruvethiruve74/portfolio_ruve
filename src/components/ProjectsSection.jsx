@@ -1,32 +1,312 @@
-import React from "react";
-import { Reveal, GlassCard } from "./shared";
+import React, { useState } from "react";
+import { Reveal, GlassCard, GithubIcon, ExternalLinkIcon } from "./shared";
 
-export default function ProjectsSection({ projects, githubUrl }) {
+const enrichedProjects = [
+  {
+    name: "Personal Portfolio",
+    category: "Full-Stack",
+    date: "Dec 2025",
+    desc: "A modern, highly responsive developer portfolio built to showcase technical proficiency, academic accomplishments, and practical software engineering capabilities.",
+    features: [
+      "Responsive Glassmorphism UI with smooth CSS transitions",
+      "Dynamic multi-role typing animation & interactive filters",
+      "Direct email dispatch integration and clipboard utilities",
+    ],
+    stack: ["React", "TypeScript", "Vite", "CSS3"],
+    github: "https://github.com/ruvethiruve74/portfolio_ruve",
+    demo: null,
+  },
+  {
+    name: "Clothing Store Platform",
+    category: "E-Commerce",
+    date: "Nov 2025",
+    desc: "A full-featured e-commerce web platform engineered with role-based access for store administrators and customers.",
+    features: [
+      "Secure user authentication with Admin/Customer role segregation",
+      "Dynamic catalog browsing, product filtering, and search",
+      "Persistent cart management, checkout flow, and order logs",
+    ],
+    stack: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3"],
+    github: "https://github.com/ruvethiruve74",
+    demo: null,
+  },
+  {
+    name: "Food Hub Management System",
+    category: "Desktop & POS",
+    date: "Jul 2025",
+    desc: "A comprehensive point-of-sale and operational desktop application engineered for food delivery and restaurant businesses.",
+    features: [
+      "Fast POS checkout module with receipt calculation",
+      "Real-time menu inventory tracking and low-stock alerts",
+      "Staff operations management with SQL Server ACID guarantees",
+    ],
+    stack: ["C#", "SQL Server", ".NET", "Windows Forms"],
+    github: "https://github.com/ruvethiruve74",
+    demo: null,
+  },
+  {
+    name: "Fitness Management Platform",
+    category: "Full-Stack",
+    date: "Nov 2025",
+    desc: "A responsive health and workout management web application with multi-tier membership and trainer appointment coordination.",
+    features: [
+      "Member portal for tracking customized workout and diet plans",
+      "Trainer booking and schedule coordination system",
+      "Admin analytics dashboard for member subscriptions & retention",
+    ],
+    stack: ["JavaScript", "PHP", "MySQL", "HTML5", "CSS3"],
+    github: "https://github.com/ruvethiruve74",
+    demo: null,
+  },
+];
+
+export default function ProjectsSection({ githubUrl }) {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const categories = ["All", "Full-Stack", "E-Commerce", "Desktop & POS"];
+
+  const filteredProjects = enrichedProjects.filter(
+    (p) => selectedCategory === "All" || p.category === selectedCategory
+  );
+
   return (
-    <section id="projects" style={{ maxWidth: 1120, margin: "0 auto", padding: "40px 24px 80px", position: "relative", zIndex: 1 }}>
+    <section
+      id="projects"
+      style={{
+        maxWidth: 1140,
+        margin: "0 auto",
+        padding: "70px 24px 80px",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
       <Reveal>
-        <h2 className="display-font section-heading">Projects</h2>
+        <div className="section-header">
+          <span className="section-subtitle">
+            Portfolio Showcase
+          </span>
+          <h2 className="display-font section-heading">
+            Featured Projects
+          </h2>
+          <p className="section-desc">
+            Demonstrated capabilities spanning end-to-end web applications, e-commerce architectures, and enterprise desktop software.
+          </p>
+        </div>
       </Reveal>
-      <Reveal delay={60}>
-        <p style={{ maxWidth: 720, color: "#C9C1EC", lineHeight: 1.75, marginBottom: "24px" }}>
-          Selected work that demonstrates practical implementation across web, database, and business workflow systems.
-        </p>
+
+      {/* Category Tabs */}
+      <Reveal delay={80}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "10px",
+            flexWrap: "wrap",
+            marginBottom: "36px",
+          }}
+        >
+          {categories.map((cat) => {
+            const isActive = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                style={{
+                  padding: "8px 20px",
+                  borderRadius: "999px",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  border: isActive ? "1px solid #C9B8FF" : "1px solid rgba(255, 255, 255, 0.12)",
+                  background: isActive
+                    ? "linear-gradient(135deg, rgba(201, 184, 255, 0.25), rgba(96, 165, 250, 0.25))"
+                    : "rgba(255, 255, 255, 0.04)",
+                  color: isActive ? "#FFFFFF" : "#A89FD9",
+                  boxShadow: isActive ? "0 4px 20px rgba(139, 92, 246, 0.3)" : "none",
+                  transition: "all 0.2s ease",
+                }}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
       </Reveal>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
-        {projects.map((p, i) => (
+
+      {/* Projects Grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
+        {filteredProjects.map((p, i) => (
           <Reveal key={p.name} delay={i * 90}>
-            <GlassCard className="proj-card" style={{ padding: "26px", height: "100%", display: "flex", flexDirection: "column", gap: "12px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "10px" }}>
-                <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="display-font" style={{ fontSize: "18px", fontWeight: 600, color: "#F1ECFF" }}>
-                  {p.name} ↗
-                </a>
-                <span style={{ fontSize: "12px", color: "#8B7FD9", whiteSpace: "nowrap" }}>{p.date}</span>
+            <GlassCard
+              className="proj-card"
+              style={{
+                padding: "28px",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                border: "1px solid rgba(255, 255, 255, 0.12)",
+                position: "relative",
+              }}
+            >
+              {/* Header: Title + Category & Date */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px", marginBottom: "12px" }}>
+                <div>
+                  <span
+                    style={{
+                      fontSize: "11px",
+                      fontWeight: 600,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "#93C5FD",
+                      background: "rgba(59, 130, 246, 0.15)",
+                      border: "1px solid rgba(59, 130, 246, 0.3)",
+                      padding: "3px 8px",
+                      borderRadius: "6px",
+                      display: "inline-block",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    {p.category}
+                  </span>
+                  <h3
+                    className="display-font"
+                    style={{
+                      fontSize: "19px",
+                      fontWeight: 700,
+                      color: "#F5F3FF",
+                      margin: 0,
+                    }}
+                  >
+                    {p.name}
+                  </h3>
+                </div>
+                <span
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    color: "#A89FD9",
+                    background: "rgba(255, 255, 255, 0.05)",
+                    padding: "4px 10px",
+                    borderRadius: "999px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {p.date}
+                </span>
               </div>
-              <p style={{ fontSize: "14px", lineHeight: 1.65, color: "#B9B3DE", margin: 0 }}>{p.desc}</p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "7px", marginTop: "auto" }}>
+
+              {/* Description */}
+              <p style={{ fontSize: "14px", lineHeight: 1.7, color: "#C4BCE6", margin: "0 0 16px" }}>
+                {p.desc}
+              </p>
+
+              {/* Key Features */}
+              <div style={{ marginBottom: "20px" }}>
+                <div style={{ fontSize: "12px", fontWeight: 600, color: "#A89FD9", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>
+                  Key Highlights:
+                </div>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "6px" }}>
+                  {p.features.map((feat, idx) => (
+                    <li
+                      key={idx}
+                      style={{
+                        fontSize: "13px",
+                        color: "#DDD6FE",
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: "8px",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      <span style={{ color: "#38BDF8", marginTop: "2px" }}>▹</span>
+                      {feat}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Stack Chips */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "7px", marginTop: "auto", marginBottom: "20px" }}>
                 {p.stack.map((s) => (
-                  <span key={s} style={{ fontSize: "11.5px", padding: "5px 11px", borderRadius: "8px", background: "rgba(56,189,248,0.12)", border: "1px solid rgba(56,189,248,0.25)", color: "#A9E2FF" }}>{s}</span>
+                  <span
+                    key={s}
+                    style={{
+                      fontSize: "12px",
+                      padding: "4px 10px",
+                      borderRadius: "8px",
+                      background: "rgba(139, 92, 246, 0.12)",
+                      border: "1px solid rgba(196, 158, 255, 0.25)",
+                      color: "#E2D9F3",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {s}
+                  </span>
                 ))}
+              </div>
+
+              {/* Action Buttons */}
+              <div style={{ display: "flex", gap: "10px", borderTop: "1px solid rgba(255, 255, 255, 0.08)", paddingTop: "14px" }}>
+                <a
+                  href={p.github || githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    flex: 1,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    padding: "9px 14px",
+                    borderRadius: "10px",
+                    background: "rgba(255, 255, 255, 0.06)",
+                    border: "1px solid rgba(255, 255, 255, 0.15)",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "#F5F3FF",
+                    transition: "all 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(139, 92, 246, 0.25)";
+                    e.currentTarget.style.borderColor = "#C9B8FF";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.06)";
+                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.15)";
+                  }}
+                >
+                  <GithubIcon size={16} />
+                  Source Code
+                </a>
+
+                <a
+                  href={p.github || githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "9px 12px",
+                    borderRadius: "10px",
+                    background: "rgba(96, 165, 250, 0.12)",
+                    border: "1px solid rgba(96, 165, 250, 0.3)",
+                    fontSize: "13px",
+                    color: "#93C5FD",
+                    transition: "all 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(96, 165, 250, 0.25)";
+                    e.currentTarget.style.borderColor = "#93C5FD";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(96, 165, 250, 0.12)";
+                    e.currentTarget.style.borderColor = "rgba(96, 165, 250, 0.3)";
+                  }}
+                  title="View Repository"
+                >
+                  <ExternalLinkIcon size={15} />
+                </a>
               </div>
             </GlassCard>
           </Reveal>

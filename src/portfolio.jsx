@@ -6,51 +6,36 @@ import SkillsSection from "./components/SkillsSection";
 import ProjectsSection from "./components/ProjectsSection";
 import EducationSection from "./components/EducationSection";
 import ContactSection from "./components/ContactSection";
-import { GlassCard } from "./components/shared";
+import {
+  GlassCard,
+  Toast,
+  ArrowUpIcon,
+  MailIcon,
+  MenuIcon,
+  CloseIcon,
+} from "./components/shared";
 
 const PROFILE_IMG = profileImg;
 
 const skills = {
-  Frontend: ["React.js", "Next.js", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS"],
-  Backend: ["NestJS", "PHP", "REST APIs"],
-  Database: ["MySQL", "SQL Server", "Database Design"],
-  Tools: ["Git", "GitHub", "VS Code", "Figma"],
+  Frontend: ["React.js", "Next.js", "TypeScript", "JavaScript (ES6+)", "HTML5", "CSS3", "Tailwind CSS"],
+  Backend: ["NestJS", "PHP", "RESTful APIs", "Node.js"],
+  Database: ["MySQL", "SQL Server", "Database Architecture", "Relational Modeling"],
+  Tools: ["Git", "GitHub", "VS Code", "Figma", "Postman"],
 };
 
 const GITHUB_URL = "https://github.com/ruvethiruve74";
 
-const projects = [
-  {
-    name: "Personal Portfolio",
-    date: "Dec 2025",
-    desc: "A responsive portfolio experience designed to present academic work, technical skills, and achievements with a modern, high-performance UI.",
-    stack: ["React", "TypeScript", "CSS", "Vite"],
-  },
-  {
-    name: "Clothing Store",
-    date: "Nov 2025",
-    desc: "A complete e-commerce concept with user and admin roles, secure authentication, catalog browsing, cart management, and order flow.",
-    stack: ["PHP", "MySQL", "HTML", "CSS"],
-  },
-  {
-    name: "Food Hub Management System",
-    date: "Jul 2025",
-    desc: "A desktop management solution for a food delivery business covering orders, inventory, POS, staff operations, and CRUD workflows.",
-    stack: ["C#", "SQL Server", "Windows Forms"],
-  },
-  {
-    name: "Fitness Management App",
-    date: "Nov 2025",
-    desc: "A responsive fitness platform with user and admin modules for bookings, trainer management, workouts, and member accounts.",
-    stack: ["HTML", "CSS", "JavaScript", "MySQL"],
-  },
-];
-
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home");
-  const [showEmailFloat, setShowEmailFloat] = useState(false);
-  const [showEmailPopup, setShowEmailPopup] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", feedback: "" });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastVisible, setToastVisible] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [modalForm, setModalForm] = useState({ name: "", email: "", message: "" });
+
   const sectionsRef = useRef({});
 
   const navItems = [
@@ -62,33 +47,49 @@ export default function Portfolio() {
     { id: "contact", label: "Contact" },
   ];
 
+  const triggerToast = (msg) => {
+    setToastMessage(msg);
+    setToastVisible(true);
+    setTimeout(() => {
+      setToastVisible(false);
+    }, 3200);
+  };
+
   const scrollTo = (id) => {
+    setMobileMenuOpen(false);
     sectionsRef.current[id]?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
         });
       },
-      { threshold: 0.4 }
+      { threshold: 0.25 }
     );
+
     Object.values(sectionsRef.current).forEach((el) => el && observer.observe(el));
 
-    const onScroll = () => {
+    const handleScroll = () => {
       const scrollTop = window.scrollY || window.pageYOffset;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight - windowHeight;
-      setShowEmailFloat(scrollTop > documentHeight * 0.5);
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setScrollProgress(progress);
+      setShowScrollTop(scrollTop > 450);
     };
 
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -98,328 +99,590 @@ export default function Portfolio() {
         minHeight: "100vh",
         width: "100%",
         fontFamily: "'Inter', sans-serif",
-        color: "#EDEBFF",
+        color: "#F5F3FF",
         background:
-          "radial-gradient(ellipse 72% 56% at 12% 0%, rgba(121,95,255,0.38) 0%, transparent 58%), radial-gradient(ellipse 60% 44% at 92% 16%, rgba(55,177,255,0.26) 0%, transparent 55%), radial-gradient(ellipse 80% 70% at 50% 100%, rgba(214,129,255,0.24) 0%, transparent 65%), linear-gradient(135deg, #06070d 0%, #090b16 45%, #05050b 100%)",
+          "radial-gradient(ellipse 80% 60% at 10% 0%, rgba(139, 92, 246, 0.22) 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 90% 20%, rgba(56, 189, 248, 0.18) 0%, transparent 60%), radial-gradient(ellipse 90% 70% at 50% 100%, rgba(192, 132, 252, 0.16) 0%, transparent 70%), #06070E",
         position: "relative",
         overflowX: "hidden",
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { margin: 0; background: #070812; }
-        #root { min-height: 100vh; }
         .display-font { font-family: 'Space Grotesk', sans-serif; }
-        .nav-link { position: relative; cursor: pointer; transition: color 0.3s ease, transform 0.2s ease; }
-        .nav-link:hover { color: #C9B8FF; transform: translateY(-1px); }
-        .nav-link.active { color: #FFFFFF; }
-        .orb {
-          position: absolute;
-          border-radius: 50%;
-          filter: blur(70px);
-          pointer-events: none;
-          opacity: 0.95;
-          mix-blend-mode: screen;
-          animation: drift 18s ease-in-out infinite alternate;
+        
+        .section-header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          margin-bottom: 36px;
+          width: 100%;
         }
-        .mesh {
-          position: absolute;
-          inset: 0;
-          background-image: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05) 0 1px, transparent 1px), radial-gradient(circle at 80% 30%, rgba(255,255,255,0.04) 0 1px, transparent 1px);
-          background-size: 180px 180px, 240px 240px;
-          opacity: 0.35;
-          pointer-events: none;
-          mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 90%);
+
+        .section-subtitle {
+          display: block;
+          font-size: 12px;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #C9B8FF;
+          font-weight: 600;
+          margin-bottom: 6px;
+          text-align: center;
         }
-        .bubble-layer {
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          overflow: hidden;
-          opacity: 0.78;
-        }
-        .bubble {
-          position: absolute;
-          border-radius: 50%;
-          background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0.12) 24%, rgba(129,195,255,0.08) 55%, transparent 72%);
-          border: 1px solid rgba(255,255,255,0.16);
-          box-shadow: inset 0 1px 10px rgba(255,255,255,0.12), 0 0 18px rgba(120,180,255,0.1);
-          filter: blur(0.4px);
-          animation: bubbleFloat 12s ease-in-out infinite;
-        }
-        .glow-btn { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-        .glow-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(139,92,246,0.45); }
-        .proj-card { transition: transform 0.35s ease, border-color 0.35s ease; }
-        .proj-card:hover { transform: translateY(-6px); border-color: rgba(196,158,255,0.5) !important; }
-        .skill-card { position: relative; overflow: hidden; }
-        .typing-cursor { display: inline-block; width: 8px; margin-left: 3px; border-right: 2px solid #F5EBFF; animation: blink 0.8s steps(1) infinite; vertical-align: middle; }
+
         .section-heading {
-          display: inline-block;
-          margin-bottom: 26px;
-          font-size: clamp(1.7rem, 4vw, 2.4rem);
+          display: block;
+          font-size: clamp(1.8rem, 4.5vw, 2.6rem);
           font-weight: 700;
           color: #FFFFFF;
-          text-shadow: 0 0 18px rgba(255,255,255,0.25), 0 0 35px rgba(139,92,246,0.28);
-          letter-spacing: 0.03em;
+          letter-spacing: -0.01em;
+          margin: 0;
+          text-align: center;
+        }
+
+        .section-desc {
+          max-width: 680px;
+          margin: 12px auto 0;
+          color: #C4BCE6;
+          font-size: 15px;
+          line-height: 1.7;
+          text-align: center;
+        }
+
+        .nav-pill {
           position: relative;
-          animation: headingGlow 2.4s ease-in-out infinite alternate;
-        }
-        .section-heading::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          bottom: -4px;
-          width: 100%;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, #ffffff, transparent);
-          transform: scaleX(0.7);
-          opacity: 0.7;
-        }
-        .email-float {
-          position: fixed;
-          left: 50%;
-          bottom: clamp(18px, 3vw, 30px);
-          transform: translateX(-50%);
-          z-index: 80;
-          transition: opacity 0.35s ease, transform 0.35s ease;
-          transform-style: preserve-3d;
-        }
-        .email-float.hidden {
-          opacity: 0;
-          pointer-events: none;
-          transform: translateX(-50%) translateY(24px) scale(0.9);
-        }
-        .email-float.visible {
-          opacity: 1;
-          transform: translateX(-50%) translateY(0) scale(1);
-        }
-        .email-float::before {
-          content: "";
-          position: absolute;
-          inset: -10px;
+          cursor: pointer;
+          font-size: 13.5px;
+          font-weight: 500;
+          padding: 6px 14px;
           border-radius: 999px;
-          background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 66%);
-          filter: blur(18px);
-          transform: translateZ(-12px);
+          transition: all 0.2s ease;
+          color: #A89FD9;
         }
-        .email-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 68px;
-          height: 68px;
+        .nav-pill:hover {
+          color: #FFFFFF;
+          background: rgba(255, 255, 255, 0.06);
+        }
+        .nav-pill.active {
+          color: #FFFFFF;
+          background: rgba(139, 92, 246, 0.25);
+          border: 1px solid rgba(196, 158, 255, 0.35);
+        }
+
+        .ambient-mesh {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+          background-size: 36px 36px;
+          pointer-events: none;
+          mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 95%);
+          -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 95%);
+        }
+
+        .floating-action-btn {
+          width: 46px;
+          height: 46px;
           border-radius: 50%;
-          border: 1px solid rgba(255,255,255,0.24);
-          background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
-          box-shadow: 0 14px 28px rgba(10, 6, 40, 0.38), inset 0 1px 0 rgba(255,255,255,0.2);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(17, 16, 35, 0.85);
           backdrop-filter: blur(14px);
           -webkit-backdrop-filter: blur(14px);
-          cursor: pointer;
-          animation: popIn 0.6s cubic-bezier(0.22,1,0.36,1), floatPulse 2.6s ease-in-out infinite 0.6s;
-          transform: rotateX(8deg) rotateY(-8deg);
-        }
-        .email-btn:hover {
-          transform: translateY(-3px) rotateX(8deg) rotateY(-8deg) scale(1.03);
-          box-shadow: 0 18px 34px rgba(10, 6, 40, 0.45), inset 0 1px 0 rgba(255,255,255,0.24);
-        }
-        .email-overlay {
-          position: fixed;
-          inset: 0;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 20px;
-          z-index: 95;
-          background: rgba(3, 6, 24, 0.72);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          animation: overlayFade 0.25s ease;
-        }
-        .email-modal {
-          width: min(92vw, 420px);
-          border-radius: 22px;
-          padding: 24px;
-          border: 1px solid rgba(255,255,255,0.16);
-          background: linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.07));
-          box-shadow: 0 24px 60px rgba(2, 6, 24, 0.45);
-          backdrop-filter: blur(18px);
-          -webkit-backdrop-filter: blur(18px);
-          color: #F3ECFF;
-          animation: modalPop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .email-modal input,
-        .email-modal textarea {
-          width: 100%;
-          border: 1px solid rgba(255,255,255,0.16);
-          border-radius: 12px;
-          padding: 10px 12px;
-          font-size: 14px;
-          color: #F3ECFF;
-          background: rgba(255,255,255,0.06);
-          outline: none;
-          margin-top: 6px;
-        }
-        .email-modal textarea {
-          min-height: 92px;
-          resize: vertical;
-        }
-        .email-modal button {
-          border: 0;
-          border-radius: 999px;
-          padding: 10px 16px;
+          color: #EDE9FE;
           cursor: pointer;
-          font-weight: 600;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+          transition: all 0.25s ease;
         }
-        .email-modal .send-btn {
-          background: linear-gradient(135deg, #C9B8FF, #8FA9FF);
-          color: #070812;
+        .floating-action-btn:hover {
+          transform: translateY(-3px) scale(1.05);
+          border-color: #C9B8FF;
+          background: rgba(139, 92, 246, 0.4);
+          box-shadow: 0 14px 30px rgba(139, 92, 246, 0.35);
         }
-        .email-modal .close-btn {
-          background: rgba(255,255,255,0.08);
-          color: #fff;
+
+        @keyframes modalFadeIn {
+          from { opacity: 0; transform: scale(0.95) translateY(10px); }
+          to { opacity: 1; transform: scale(1) translateY(0); }
         }
-        @keyframes overlayFade {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes modalPop {
-          0% { opacity: 0; transform: scale(0.94) translateY(10px); }
-          60% { opacity: 1; transform: scale(1.02) translateY(-3px); }
-          100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        @keyframes popIn {
-          0% { opacity: 0; transform: scale(0.7) rotateX(8deg) rotateY(-8deg); }
-          60% { opacity: 1; transform: scale(1.06) rotateX(8deg) rotateY(-8deg); }
-          100% { opacity: 1; transform: scale(1) rotateX(8deg) rotateY(-8deg); }
-        }
-        @keyframes floatPulse {
-          0%, 100% { transform: translateY(0) rotateX(8deg) rotateY(-8deg); }
-          50% { transform: translateY(-6px) rotateX(8deg) rotateY(-8deg); }
-        }
-        @keyframes blink { 50% { border-color: transparent; } }
-        @keyframes drift {
-          0% { transform: translate3d(0, 0, 0) scale(1); }
-          100% { transform: translate3d(30px, -40px, 0) scale(1.08); }
-        }
-        @keyframes bubbleFloat {
-          0%, 100% { transform: translate3d(0, 0, 0) scale(0.95); }
-          50% { transform: translate3d(18px, -28px, 0) scale(1.08); }
-        }
-        @keyframes headingGlow {
-          from { text-shadow: 0 0 10px rgba(255,255,255,0.2), 0 0 20px rgba(139,92,246,0.2); }
-          to { text-shadow: 0 0 22px rgba(255,255,255,0.4), 0 0 40px rgba(139,92,246,0.35); }
-        }
-        ::selection { background: rgba(139,92,246,0.5); }
-        a { color: inherit; text-decoration: none; }
       `}</style>
 
-      <div className="mesh" />
-      <div className="bubble-layer">
-        {Array.from({ length: 20 }).map((_, index) => (
+      {/* Top Scroll Progress Bar */}
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          height: "3px",
+          width: `${scrollProgress}%`,
+          background: "linear-gradient(90deg, #C9B8FF 0%, #38BDF8 50%, #34D399 100%)",
+          zIndex: 100,
+          boxShadow: "0 0 10px rgba(56, 189, 248, 0.6)",
+          transition: "width 0.1s ease-out",
+        }}
+      />
+
+      {/* Subtle Background Mesh */}
+      <div className="ambient-mesh" />
+
+      {/* Sticky Header / Navbar */}
+      <header
+        style={{
+          position: "sticky",
+          top: "14px",
+          zIndex: 60,
+          display: "flex",
+          justifyContent: "center",
+          padding: "0 20px",
+          width: "100%",
+        }}
+      >
+        <GlassCard
+          style={{
+            width: "100%",
+            maxWidth: "1020px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "10px 20px",
+            borderRadius: "999px",
+            border: "1px solid rgba(255, 255, 255, 0.14)",
+            background: "rgba(10, 11, 24, 0.75)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+          }}
+          hoverEffect={false}
+        >
+          {/* Logo / Brand */}
           <div
-            key={index}
-            className="bubble"
+            onClick={() => scrollTo("home")}
             style={{
-              width: `${28 + (index % 6) * 10}px`,
-              height: `${28 + (index % 6) * 10}px`,
-              left: `${6 + (index * 4) % 90}%`,
-              top: `${8 + (index * 7) % 82}%`,
-              animationDelay: `${-index * 0.8}s`,
-              opacity: 0.45 + (index % 4) * 0.11,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
             }}
-          />
-        ))}
-      </div>
-      <div className="orb" style={{ width: 460, height: 460, top: -150, left: -140, background: "radial-gradient(circle, rgba(142,104,255,0.56), transparent 72%)" }} />
-      <div className="orb" style={{ width: 380, height: 380, top: 240, right: -180, background: "radial-gradient(circle, rgba(62,174,255,0.34), transparent 72%)", animationDelay: "-6s" }} />
-      <div className="orb" style={{ width: 340, height: 340, bottom: 55, left: "34%", background: "radial-gradient(circle, rgba(220,138,255,0.28), transparent 72%)", animationDelay: "-10s" }} />
-
-      <nav style={{ position: "sticky", top: 0, zIndex: 50, display: "flex", justifyContent: "center", padding: "18px 20px" }}>
-        <GlassCard style={{ display: "flex", alignItems: "center", gap: "clamp(10px, 2vw, 28px)", padding: "10px 22px", borderRadius: "999px", flexWrap: "wrap", justifyContent: "center" }}>
-          {navItems.map((item) => (
-            <span
-              key={item.id}
-              className={`nav-link ${activeSection === item.id ? "active" : ""}`}
-              onClick={() => scrollTo(item.id)}
-              style={{ fontSize: "13.5px", fontWeight: 500, letterSpacing: "0.02em", color: activeSection === item.id ? "#D9CBFF" : "#A79FD6" }}
+          >
+            <div
+              style={{
+                width: "34px",
+                height: "34px",
+                borderRadius: "10px",
+                background: "linear-gradient(135deg, #C9B8FF, #60A5FA)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: 800,
+                fontSize: "14px",
+                color: "#070814",
+              }}
             >
-              {item.label}
-            </span>
-          ))}
-        </GlassCard>
-      </nav>
-
-      <div ref={(el) => (sectionsRef.current.home = el)}>
-        <HomeSection profileImg={PROFILE_IMG} scrollTo={scrollTo} />
-      </div>
-      <div ref={(el) => (sectionsRef.current.about = el)}>
-        <AboutSection />
-      </div>
-      <div ref={(el) => (sectionsRef.current.skills = el)}>
-        <SkillsSection skills={skills} />
-      </div>
-      <div ref={(el) => (sectionsRef.current.projects = el)}>
-        <ProjectsSection projects={projects} githubUrl={GITHUB_URL} />
-      </div>
-      <div ref={(el) => (sectionsRef.current.education = el)}>
-        <EducationSection />
-      </div>
-      <div ref={(el) => (sectionsRef.current.contact = el)}>
-        <ContactSection />
-      </div>
-
-      {showEmailPopup && (
-        <div className="email-overlay" onClick={() => setShowEmailPopup(false)}>
-          <div className="email-modal" onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
-              <div style={{ fontSize: "13px", letterSpacing: "0.24em", textTransform: "uppercase", color: "#A99BEA" }}>Contact</div>
-              <button className="close-btn" onClick={() => setShowEmailPopup(false)} aria-label="Close form">×</button>
+              RS
             </div>
+            <span
+              className="display-font"
+              style={{
+                fontSize: "15px",
+                fontWeight: 700,
+                letterSpacing: "-0.01em",
+                color: "#F5F3FF",
+              }}
+            >
+              Ruvethikka
+            </span>
+          </div>
+
+          {/* Desktop Navigation Links */}
+          <nav
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+            }}
+            className="desktop-nav"
+          >
+            {navItems.map((item) => (
+              <span
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className={`nav-pill ${activeSection === item.id ? "active" : ""}`}
+              >
+                {item.label}
+              </span>
+            ))}
+          </nav>
+
+          {/* Hire Me CTA & Mobile Hamburger */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <button
+              onClick={() => scrollTo("contact")}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "8px 18px",
+                borderRadius: "999px",
+                fontSize: "12.5px",
+                fontWeight: 600,
+                background: "linear-gradient(135deg, #C9B8FF 0%, #93C5FD 100%)",
+                color: "#070814",
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+              className="desktop-hire-btn"
+            >
+              Get in Touch
+            </button>
+
+            {/* Mobile Hamburger Toggle */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle navigation menu"
+              style={{
+                display: "none",
+                background: "rgba(255, 255, 255, 0.08)",
+                border: "1px solid rgba(255, 255, 255, 0.16)",
+                borderRadius: "10px",
+                padding: "7px",
+                color: "#EDE9FE",
+                cursor: "pointer",
+              }}
+              className="mobile-hamburger-btn"
+            >
+              {mobileMenuOpen ? <CloseIcon size={20} /> : <MenuIcon size={20} />}
+            </button>
+          </div>
+        </GlassCard>
+      </header>
+
+      {/* Mobile Drawer Menu */}
+      {mobileMenuOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: "76px",
+            left: "20px",
+            right: "20px",
+            maxWidth: "460px",
+            margin: "0 auto",
+            zIndex: 59,
+            borderRadius: "20px",
+            background: "rgba(12, 13, 28, 0.95)",
+            backdropFilter: "blur(24px)",
+            WebkitBackdropFilter: "blur(24px)",
+            border: "1px solid rgba(255, 255, 255, 0.14)",
+            padding: "18px",
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.6)",
+            animation: "modalFadeIn 0.25s ease",
+          }}
+        >
+          <div style={{ display: "grid", gap: "8px" }}>
+            {navItems.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                style={{
+                  padding: "12px 16px",
+                  borderRadius: "12px",
+                  fontSize: "14.5px",
+                  fontWeight: 600,
+                  color: activeSection === item.id ? "#FFFFFF" : "#C4BCE6",
+                  background: activeSection === item.id ? "rgba(139, 92, 246, 0.22)" : "rgba(255, 255, 255, 0.03)",
+                  border: activeSection === item.id ? "1px solid rgba(196, 158, 255, 0.4)" : "1px solid transparent",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <span>{item.label}</span>
+                {activeSection === item.id && (
+                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#C9B8FF" }} />
+                )}
+              </div>
+            ))}
+            <button
+              onClick={() => scrollTo("contact")}
+              style={{
+                marginTop: "6px",
+                width: "100%",
+                padding: "12px",
+                borderRadius: "12px",
+                fontWeight: 700,
+                fontSize: "14px",
+                background: "linear-gradient(135deg, #C9B8FF 0%, #93C5FD 100%)",
+                color: "#080614",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Get in Touch
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Main Content Sections */}
+      <main>
+        <div ref={(el) => (sectionsRef.current.home = el)}>
+          <HomeSection profileImg={PROFILE_IMG} scrollTo={scrollTo} />
+        </div>
+        <div ref={(el) => (sectionsRef.current.about = el)}>
+          <AboutSection />
+        </div>
+        <div ref={(el) => (sectionsRef.current.skills = el)}>
+          <SkillsSection skills={skills} />
+        </div>
+        <div ref={(el) => (sectionsRef.current.projects = el)}>
+          <ProjectsSection githubUrl={GITHUB_URL} />
+        </div>
+        <div ref={(el) => (sectionsRef.current.education = el)}>
+          <EducationSection />
+        </div>
+        <div ref={(el) => (sectionsRef.current.contact = el)}>
+          <ContactSection onShowToast={triggerToast} />
+        </div>
+      </main>
+
+      {/* Quick Email Popup Modal */}
+      {showContactModal && (
+        <div
+          onClick={() => setShowContactModal(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 95,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+            background: "rgba(4, 6, 20, 0.78)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "min(92vw, 440px)",
+              borderRadius: "22px",
+              padding: "26px",
+              border: "1px solid rgba(255, 255, 255, 0.16)",
+              background: "linear-gradient(135deg, #13122A 0%, #1A173A 100%)",
+              boxShadow: "0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(139, 92, 246, 0.2)",
+              color: "#F3ECFF",
+              animation: "modalFadeIn 0.25s ease",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+              <div style={{ fontSize: "13px", letterSpacing: "0.15em", textTransform: "uppercase", color: "#C9B8FF", fontWeight: 600 }}>
+                Quick Contact
+              </div>
+              <button
+                onClick={() => setShowContactModal(false)}
+                aria-label="Close dialog"
+                style={{
+                  background: "rgba(255, 255, 255, 0.08)",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "28px",
+                  height: "28px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#EDE9FE",
+                  cursor: "pointer",
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            <p style={{ fontSize: "13.5px", color: "#C4BCE6", margin: "0 0 16px" }}>
+              Reach out directly or send a message to{" "}
+              <strong style={{ color: "#F5F3FF" }}>ruvethiruve74@gmail.com</strong>
+            </p>
+
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                const subject = encodeURIComponent(`Portfolio Feedback from ${formData.name || "Anonymous"}`);
-                const body = encodeURIComponent(`Name: ${formData.name || ""}\nEmail: ${formData.email || ""}\n\nFeedback:\n${formData.feedback || ""}`);
+                const subject = encodeURIComponent(`Portfolio Message from ${modalForm.name || "Colleague"}`);
+                const body = encodeURIComponent(`Name: ${modalForm.name}\nEmail: ${modalForm.email}\n\nMessage:\n${modalForm.message}`);
                 window.location.href = `mailto:ruvethiruve74@gmail.com?subject=${subject}&body=${body}`;
-                setShowEmailPopup(false);
+                setShowContactModal(false);
+                triggerToast("Opening email client...");
               }}
+              style={{ display: "grid", gap: "12px" }}
             >
-              <div style={{ marginBottom: "10px" }}>
-                <label style={{ fontSize: "13px", color: "#D8CFFF" }}>Name</label>
-                <input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Your name" required />
+              <div>
+                <label style={{ display: "block", fontSize: "12.5px", color: "#DDD6FE", marginBottom: "4px" }}>
+                  Your Name
+                </label>
+                <input
+                  value={modalForm.name}
+                  onChange={(e) => setModalForm({ ...modalForm, name: e.target.value })}
+                  placeholder="John Doe"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "10px 12px",
+                    borderRadius: "10px",
+                    border: "1px solid rgba(255, 255, 255, 0.14)",
+                    background: "rgba(255, 255, 255, 0.05)",
+                    color: "#F5F3FF",
+                    fontSize: "13.5px",
+                    outline: "none",
+                  }}
+                />
               </div>
-              <div style={{ marginBottom: "10px" }}>
-                <label style={{ fontSize: "13px", color: "#D8CFFF" }}>Email</label>
-                <input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="Your email" required />
+
+              <div>
+                <label style={{ display: "block", fontSize: "12.5px", color: "#DDD6FE", marginBottom: "4px" }}>
+                  Your Email
+                </label>
+                <input
+                  type="email"
+                  value={modalForm.email}
+                  onChange={(e) => setModalForm({ ...modalForm, email: e.target.value })}
+                  placeholder="name@example.com"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "10px 12px",
+                    borderRadius: "10px",
+                    border: "1px solid rgba(255, 255, 255, 0.14)",
+                    background: "rgba(255, 255, 255, 0.05)",
+                    color: "#F5F3FF",
+                    fontSize: "13.5px",
+                    outline: "none",
+                  }}
+                />
               </div>
-              <div style={{ marginBottom: "14px" }}>
-                <label style={{ fontSize: "13px", color: "#D8CFFF" }}>Feedback for my portfolio</label>
-                <textarea value={formData.feedback} onChange={(e) => setFormData({ ...formData, feedback: e.target.value })} placeholder="Share your feedback..." required />
+
+              <div>
+                <label style={{ display: "block", fontSize: "12.5px", color: "#DDD6FE", marginBottom: "4px" }}>
+                  Message
+                </label>
+                <textarea
+                  value={modalForm.message}
+                  onChange={(e) => setModalForm({ ...modalForm, message: e.target.value })}
+                  placeholder="Hi Ruvethikka, I'd like to discuss..."
+                  rows="4"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "10px 12px",
+                    borderRadius: "10px",
+                    border: "1px solid rgba(255, 255, 255, 0.14)",
+                    background: "rgba(255, 255, 255, 0.05)",
+                    color: "#F5F3FF",
+                    fontSize: "13.5px",
+                    outline: "none",
+                    resize: "vertical",
+                  }}
+                />
               </div>
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-                <button type="button" className="close-btn" onClick={() => setShowEmailPopup(false)}>Cancel</button>
-                <button type="submit" className="send-btn">Send</button>
+
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "6px" }}>
+                <button
+                  type="button"
+                  onClick={() => setShowContactModal(false)}
+                  style={{
+                    padding: "9px 16px",
+                    borderRadius: "999px",
+                    background: "rgba(255, 255, 255, 0.08)",
+                    border: "none",
+                    color: "#EDE9FE",
+                    cursor: "pointer",
+                    fontWeight: 600,
+                    fontSize: "13px",
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  style={{
+                    padding: "9px 20px",
+                    borderRadius: "999px",
+                    background: "linear-gradient(135deg, #C9B8FF 0%, #93C5FD 100%)",
+                    border: "none",
+                    color: "#080614",
+                    cursor: "pointer",
+                    fontWeight: 700,
+                    fontSize: "13px",
+                  }}
+                >
+                  Send Email
+                </button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      <div className={`email-float ${showEmailFloat ? "visible" : "hidden"}`}>
+      {/* Floating Action Controls Docked at Bottom-Right */}
+      <div
+        style={{
+          position: "fixed",
+          bottom: "28px",
+          right: "24px",
+          zIndex: 80,
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          alignItems: "center",
+        }}
+      >
+        {/* Back to top button */}
+        {showScrollTop && (
+          <button
+            onClick={scrollToTop}
+            className="floating-action-btn"
+            aria-label="Back to top"
+            title="Back to top"
+          >
+            <ArrowUpIcon size={18} />
+          </button>
+        )}
+
+        {/* Quick Email floating trigger */}
         <button
-          aria-label="Email me"
-          className="email-btn"
-          onClick={() => setShowEmailPopup(true)}
-          style={{ color: "#F5ECFF", textDecoration: "none" }}
+          onClick={() => setShowContactModal(true)}
+          className="floating-action-btn"
+          aria-label="Open contact message modal"
+          title="Send a message"
+          style={{
+            background: "linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(59, 130, 246, 0.35))",
+            borderColor: "rgba(196, 158, 255, 0.4)",
+          }}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <rect x="3" y="5" width="18" height="14" rx="2" />
-            <path d="M3 7l9 7 9-7" />
-          </svg>
+          <MailIcon size={18} color="#EDE9FE" />
         </button>
       </div>
+
+      {/* Toast Notification */}
+      <Toast
+        message={toastMessage}
+        visible={toastVisible}
+        onDismiss={() => setToastVisible(false)}
+      />
+
+      {/* Responsive Media Query Overrides */}
+      <style>{`
+        @media (max-width: 768px) {
+          .desktop-nav {
+            display: none !important;
+          }
+          .desktop-hire-btn {
+            display: none !important;
+          }
+          .mobile-hamburger-btn {
+            display: inline-flex !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

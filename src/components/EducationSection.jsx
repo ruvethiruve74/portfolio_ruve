@@ -1,29 +1,181 @@
 import React from "react";
-import { Reveal, GlassCard } from "./shared";
+import { Reveal, GlassCard, GraduationIcon, CalendarIcon } from "./shared";
 
 export default function EducationSection() {
+  const educationData = [
+    {
+      title: "Pearson BTEC Higher National Diploma in Computing",
+      institution: "ESOFT Metro Campus",
+      period: "Ongoing · Final Year",
+      status: "In Progress",
+      statusColor: "#34D399",
+      description:
+        "Comprehensive higher diploma curriculum focused on core computer science foundations, software design patterns, full-stack web development, and relational database systems.",
+      modules: [
+        "Software Engineering",
+        "Database Design & Development",
+        "Programming Principles (OOP)",
+        "Web Design & Development",
+        "Data Structures & Algorithms",
+        "Computing Research Project",
+      ],
+    },
+    {
+      title: "General Certificate of Education (G.C.E.) Advanced Level",
+      institution: "High School Studies",
+      period: "May 2018 – Aug 2020",
+      status: "Completed",
+      statusColor: "#93C5FD",
+      description:
+        "Established strong analytical, mathematical, and problem-solving foundations through rigorous secondary science and technology coursework.",
+      modules: ["Mathematics", "Physics", "Chemistry / ICT Fundamentals"],
+    },
+  ];
+
   return (
-    <section id="education" style={{ maxWidth: 900, margin: "0 auto", padding: "40px 24px 80px", position: "relative", zIndex: 1 }}>
+    <section
+      id="education"
+      style={{
+        maxWidth: 960,
+        margin: "0 auto",
+        padding: "60px 24px 80px",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
       <Reveal>
-        <h2 className="display-font section-heading">Education</h2>
+        <div className="section-header">
+          <span className="section-subtitle">
+            Academic Background
+          </span>
+          <h2 className="display-font section-heading">
+            Education & Qualifications
+          </h2>
+          <p className="section-desc">
+            Formal education providing strong foundational principles in computer science and software development.
+          </p>
+        </div>
       </Reveal>
-      <Reveal delay={100}>
-        <GlassCard style={{ padding: "28px clamp(20px,4vw,36px)", marginBottom: "16px" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "8px", marginBottom: "6px" }}>
-            <h3 style={{ fontSize: "16px", fontWeight: 600, margin: 0, color: "#F1ECFF" }}>Higher National Diploma in Computing</h3>
-            <span style={{ fontSize: "12px", color: "#8B7FD9" }}>Ongoing</span>
-          </div>
-          <p style={{ fontSize: "14px", color: "#B9B3DE", margin: 0 }}>ESOFT Metro Campus</p>
-        </GlassCard>
-      </Reveal>
-      <Reveal delay={180}>
-        <GlassCard style={{ padding: "28px clamp(20px,4vw,36px)" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "8px", marginBottom: "6px" }}>
-            <h3 style={{ fontSize: "16px", fontWeight: 600, margin: 0, color: "#F1ECFF" }}>G.C.E. Advanced Level</h3>
-            <span style={{ fontSize: "12px", color: "#8B7FD9" }}>May 2018 – Aug 2020</span>
-          </div>
-        </GlassCard>
-      </Reveal>
+
+      {/* Timeline Container */}
+      <div style={{ position: "relative", display: "grid", gap: "24px" }}>
+        {educationData.map((item, index) => (
+          <Reveal key={item.title} delay={index * 120}>
+            <GlassCard
+              style={{
+                padding: "30px clamp(20px, 4vw, 36px)",
+                border: "1px solid rgba(255, 255, 255, 0.12)",
+                position: "relative",
+              }}
+            >
+              {/* Header row */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  flexWrap: "wrap",
+                  gap: "12px",
+                  marginBottom: "8px",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <div
+                    style={{
+                      width: "36px",
+                      height: "36px",
+                      borderRadius: "10px",
+                      background: "rgba(139, 92, 246, 0.15)",
+                      border: "1px solid rgba(196, 158, 255, 0.3)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#C9B8FF",
+                    }}
+                  >
+                    <GraduationIcon size={20} />
+                  </div>
+                  <div>
+                    <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, color: "#F5F3FF" }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ fontSize: "14px", fontWeight: 500, color: "#93C5FD", margin: "2px 0 0" }}>
+                      {item.institution}
+                    </p>
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      padding: "4px 10px",
+                      borderRadius: "999px",
+                      background: `${item.statusColor}18`,
+                      border: `1px solid ${item.statusColor}40`,
+                      color: item.statusColor,
+                    }}
+                  >
+                    {item.status}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "13px",
+                      color: "#A89FD9",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                  >
+                    <CalendarIcon size={14} />
+                    {item.period}
+                  </span>
+                </div>
+              </div>
+
+              {/* Description */}
+              <p style={{ fontSize: "14.5px", lineHeight: 1.75, color: "#C4BCE6", margin: "14px 0 16px" }}>
+                {item.description}
+              </p>
+
+              {/* Coursework Modules */}
+              <div>
+                <div
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    color: "#A89FD9",
+                    marginBottom: "8px",
+                  }}
+                >
+                  Key Coursework & Competencies:
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                  {item.modules.map((m) => (
+                    <span
+                      key={m}
+                      style={{
+                        fontSize: "12px",
+                        padding: "5px 12px",
+                        borderRadius: "8px",
+                        background: "rgba(255, 255, 255, 0.04)",
+                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        color: "#DDD6FE",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {m}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </GlassCard>
+          </Reveal>
+        ))}
+      </div>
     </section>
   );
 }

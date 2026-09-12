@@ -1,5 +1,5 @@
 import React from "react";
-import { Reveal, GlassCard, SparklesIcon, CodeIcon } from "./shared";
+import { Reveal, GlassCard, SparklesIcon } from "./shared";
 
 export default function AboutSection() {
   return (
@@ -43,43 +43,6 @@ export default function AboutSection() {
           </GlassCard>
         </Reveal>
 
-        {/* Core Pillars Card */}
-        <Reveal delay={140}>
-          <GlassCard style={{ padding: "32px", height: "100%", display: "flex", flexDirection: "column", gap: "16px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", color: "#60A5FA" }}>
-              <CodeIcon size={20} />
-              <h3 style={{ fontSize: "18px", fontWeight: 600, color: "#F5F3FF", margin: 0 }}>
-                How I Work
-              </h3>
-            </div>
-            
-            <div style={{ display: "grid", gap: "12px" }}>
-              {[
-                { title: "Clean Architecture", desc: "Writing clean, modular, and well-structured code with strong fundamentals." },
-                { title: "User-Centered Design", desc: "Creating intuitive, responsive layouts with seamless interaction and high contrast." },
-                { title: "Database & APIs", desc: "Modeling scalable relational schemas and designing robust RESTful APIs." },
-                { title: "Continuous Growth", desc: "Constantly expanding skills across modern stacks like Next.js, TypeScript, and NestJS." },
-              ].map((item) => (
-                <div
-                  key={item.title}
-                  style={{
-                    padding: "10px 14px",
-                    borderRadius: "12px",
-                    background: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
-                  }}
-                >
-                  <div style={{ fontSize: "13.5px", fontWeight: 600, color: "#EDE9FE", marginBottom: "2px" }}>
-                    {item.title}
-                  </div>
-                  <div style={{ fontSize: "12px", color: "#A89FD9", lineHeight: 1.5 }}>
-                    {item.desc}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
-        </Reveal>
       </div>
 
       {/* Quick Attributes Row */}

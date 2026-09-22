@@ -9,26 +9,14 @@ export default function EducationSection() {
       period: "Ongoing · Final Year",
       status: "In Progress",
       statusColor: "#34D399",
-      description:
-        "Comprehensive higher diploma curriculum focused on core computer science foundations, software design patterns, full-stack web development, and relational database systems.",
-      modules: [
-        "Software Engineering",
-        "Database Design & Development",
-        "Programming Principles (OOP)",
-        "Web Design & Development",
-        "Data Structures & Algorithms",
-        "Computing Research Project",
-      ],
+      
     },
     {
-      title: "General Certificate of Education (G.C.E.) Advanced Level",
-      institution: "High School Studies",
-      period: "May 2018 – Aug 2020",
+      title: "G.C.E. Advanced Level",
+      institution: "Secondary Education",
+      period: "Completed · 2020",
       status: "Completed",
       statusColor: "#93C5FD",
-      description:
-        "Established strong analytical, mathematical, and problem-solving foundations through rigorous secondary science and technology coursework.",
-      modules: ["Mathematics", "Physics", "Chemistry / ICT Fundamentals"],
     },
   ];
 
@@ -42,6 +30,7 @@ export default function EducationSection() {
         position: "relative",
         zIndex: 1,
       }}
+    
     >
       <Reveal>
         <div className="section-header">
@@ -51,9 +40,6 @@ export default function EducationSection() {
           <h2 className="display-font section-heading">
             Education & Qualifications
           </h2>
-          <p className="section-desc">
-            Formal education providing strong foundational principles in computer science and software development.
-          </p>
         </div>
       </Reveal>
 
@@ -135,43 +121,47 @@ export default function EducationSection() {
               </div>
 
               {/* Description */}
-              <p style={{ fontSize: "14.5px", lineHeight: 1.75, color: "#C4BCE6", margin: "14px 0 16px" }}>
-                {item.description}
-              </p>
+              {item.description && (
+                <p style={{ fontSize: "14.5px", lineHeight: 1.75, color: "#C4BCE6", margin: "14px 0 16px" }}>
+                  {item.description}
+                </p>
+              )}
 
               {/* Coursework Modules */}
-              <div>
-                <div
-                  style={{
-                    fontSize: "12px",
-                    fontWeight: 600,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.08em",
-                    color: "#A89FD9",
-                    marginBottom: "8px",
-                  }}
-                >
-                  Key Coursework & Competencies:
+              {item.modules && item.modules.length > 0 && (
+                <div>
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      color: "#A89FD9",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    Key Coursework & Competencies:
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {item.modules.map((m) => (
+                      <span
+                        key={m}
+                        style={{
+                          fontSize: "12px",
+                          padding: "5px 12px",
+                          borderRadius: "8px",
+                          background: "rgba(255, 255, 255, 0.04)",
+                          border: "1px solid rgba(255, 255, 255, 0.1)",
+                          color: "#DDD6FE",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {m}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                  {item.modules.map((m) => (
-                    <span
-                      key={m}
-                      style={{
-                        fontSize: "12px",
-                        padding: "5px 12px",
-                        borderRadius: "8px",
-                        background: "rgba(255, 255, 255, 0.04)",
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
-                        color: "#DDD6FE",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {m}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              )}
             </GlassCard>
           </Reveal>
         ))}

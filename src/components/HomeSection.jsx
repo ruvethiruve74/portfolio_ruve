@@ -93,8 +93,8 @@ export default function HomeSection({ profileImg, scrollTo }) {
           roles={[
             "Full-Stack Developer",
             "Software Engineering Student",
-            "React & NestJS Specialist",
-            "Creative Problem Solver",
+            "Aspiring Software Testing & Quality Assurance",
+            
           ]}
         />
       </Reveal>
@@ -131,9 +131,7 @@ export default function HomeSection({ profileImg, scrollTo }) {
             textAlign: "center",
           }}
         >
-          A dedicated Software Engineering student pursuing a Higher National Diploma in Computing.
-          Passionate about architecting responsive, high-performance web applications, robust backends,
-          and scalable database architectures.
+         Passionate about transforming ideas into innovative, scalable, and reliable software solutions that create impactful digital experiences.
         </p>
       </Reveal>
 
@@ -149,35 +147,9 @@ export default function HomeSection({ profileImg, scrollTo }) {
             marginBottom: "28px",
           }}
         >
-          <button
-            onClick={() => scrollTo("projects")}
-            style={{
-              cursor: "pointer",
-              padding: "13px 28px",
-              borderRadius: "999px",
-              fontWeight: 600,
-              fontSize: "14px",
-              color: "#080614",
-              background: "linear-gradient(135deg, #C9B8FF 0%, #93C5FD 100%)",
-              border: "none",
-              boxShadow: "0 8px 24px rgba(139, 92, 246, 0.35)",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              transition: "all 0.25s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-3px)";
-              e.currentTarget.style.boxShadow = "0 14px 30px rgba(139, 92, 246, 0.5)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 8px 24px rgba(139, 92, 246, 0.35)";
-            }}
-          >
-            <SparklesIcon size={16} color="#080614" />
-            Explore Projects
-          </button>
+          
+          
+           
 
           <button
             onClick={() => scrollTo("contact")}
@@ -337,21 +309,11 @@ export default function HomeSection({ profileImg, scrollTo }) {
           }}
         >
           {[
-            { label: "4+ Practical Projects", desc: "Full-Stack & Desktop" },
-            { label: "HND in Computing", desc: "ESOFT Metro Campus" },
-            { label: "Frontend & Backend", desc: "React · TypeScript · NestJS" },
+            
           ].map((item) => (
             <div
               key={item.label}
-              style={{
-                border: "1px solid rgba(196, 158, 255, 0.2)",
-                borderRadius: "14px",
-                padding: "10px 18px",
-                background: "rgba(255, 255, 255, 0.03)",
-                backdropFilter: "blur(8px)",
-                textAlign: "center",
-                flex: "1 1 200px",
-              }}
+              
             >
               <div style={{ fontSize: "13px", fontWeight: 600, color: "#EDE9FE" }}>
                 {item.label}

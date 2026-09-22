@@ -35,50 +35,16 @@ export default function AboutSection() {
               </h3>
             </div>
             <p style={{ fontSize: "15px", lineHeight: 1.85, color: "#C4BCE6", margin: 0 }}>
-              I am a Software Engineering student currently pursuing a Higher National Diploma in Computing at ESOFT Metro Campus. My journey began with a natural curiosity for problem-solving, which quickly evolved into a passion for architecting responsive, reliable, and user-friendly software.
+             I’m a passionate and motivated Software Engineering student and aspiring Full-Stack Developer with a strong interest in creating innovative and reliable software solutions. I enjoy turning ideas into practical digital experiences and solving problems through creative and logical thinking.
+             I’m also developing a strong interest in Software Testing and Quality Assurance, with a focus on building applications that are reliable, user-friendly, and maintain high standards of quality.
+             I’m always eager to learn, explore new challenges, and continuously improve my skills. My goal is to grow as a well-rounded software professional and contribute to meaningful projects that create real value.
             </p>
-            <p style={{ fontSize: "15px", lineHeight: 1.85, color: "#C4BCE6", margin: 0 }}>
-              Whether designing clean interfaces with React & Tailwind CSS or engineering backend logic and databases with NestJS, PHP, and SQL, I focus on building maintainable solutions that deliver real-world business value.
-            </p>
+            
           </GlassCard>
         </Reveal>
 
       </div>
-
-      {/* Quick Attributes Row */}
-      <Reveal delay={200}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
-            gap: "14px",
-            marginTop: "20px",
-          }}
-        >
-          {[
-            { label: "Specialization", value: "Full-Stack Web & Software" },
-            { label: "Education", value: "Pearson BTEC HND (ESOFT)" },
-            { label: "Location", value: "Sri Lanka" },
-            { label: "Target", value: "Software Engineering Intern" },
-          ].map((item) => (
-            <GlassCard
-              key={item.label}
-              style={{
-                padding: "16px 20px",
-                border: "1px solid rgba(196, 158, 255, 0.18)",
-                textAlign: "center",
-              }}
-            >
-              <div style={{ fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: "#A89FD9", marginBottom: "4px" }}>
-                {item.label}
-              </div>
-              <div style={{ fontSize: "14px", fontWeight: 600, color: "#F5F3FF" }}>
-                {item.value}
-              </div>
-            </GlassCard>
-          ))}
-        </div>
-      </Reveal>
     </section>
-  );
+  );  
 }
+

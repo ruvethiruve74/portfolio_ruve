@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
-import {
-  Reveal,
-  GlassCard,
-  ContactRow,
-  MailIcon,
-  CheckIcon,
-} from "./shared";
+import { Reveal } from "./shared";
 
 const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -19,23 +13,6 @@ export default function ContactSection({ onShowToast }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const copyToClipboard = (text, label) => {
-    navigator.clipboard.writeText(text).then(
-      () => {
-        if (onShowToast) onShowToast(`${label} copied to clipboard!`);
-      },
-      () => {
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-        if (onShowToast) onShowToast(`${label} copied to clipboard!`);
-      }
-    );
   };
 
   const handleSubmit = async (e) => {
@@ -78,7 +55,7 @@ export default function ContactSection({ onShowToast }) {
     const mailBody = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
-    window.location.href = `mailto:ruvethiruve74@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+    window.location.href = `mailto:ruvethi@gmail.com?subject=${mailSubject}&body=${mailBody}`;
     setStatus("fallback");
     if (onShowToast) onShowToast("Opening your email client to send message...");
   };
@@ -102,41 +79,50 @@ export default function ContactSection({ onShowToast }) {
             Get In Touch
           </span>
           <h2 className="display-font section-heading">
-            Let’s Build Something Together
+            Let’s Build Something
           </h2>
+          <p style={{ margin: "8px 0 0", color: "#A9A8B8", fontSize: "20px" }}>
+            Let’s connect and explore ideas, opportunities, and ways to build something meaningful.
+          </p>
         </div>
       </Reveal>
 
-      {/* Direct Communication Channels */}
       <Reveal delay={80}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "14px", marginBottom: "24px" }}>
-          
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "28px", marginTop: "14px" }}>
+          {[
+            ["Email", "mailto:ruvethi@gmail.com"],
+            ["GitHub", "https://github.com/ruvethiruve74"],
+            ["LinkedIn", "https://www.linkedin.com/in/ruvethikka-siree/"],
+          ].map(([label, href]) => (
+            <a
+              key={label}
+              href={href}
+              target={href.startsWith("mailto:") ? "_self" : "_blank"}
+              rel="noopener noreferrer"
+              style={{
+                minWidth: "120px",
+                padding: "12px 24px",
+                border: "1px solid rgba(71, 196, 198, 0.45)",
+                borderRadius: "22px",
+                color: "#F0EFF7",
+                fontSize: "20px",
+                fontWeight: 600,
+                textAlign: "center",
+                transition: "border-color 0.2s ease, background 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "#47C4C6";
+                e.currentTarget.style.background = "rgba(71, 196, 198, 0.08)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(71, 196, 198, 0.45)";
+                e.currentTarget.style.background = "transparent";
+              }}
+            >
+              {label}
+            </a>
+          ))}
         </div>
-      </Reveal>
-
-      {/* Social and Profile Links */}
-      <Reveal delay={140}>
-        <GlassCard style={{ padding: "24px", marginBottom: "28px", textAlign: "left" }}>
-          <div style={{ display: "grid", gap: "12px" }}>
-            <ContactRow
-              label="Email"
-              value="ruvethiruve74@gmail.com"
-              href="mailto:ruvethiruve74@gmail.com"
-              onCopy={() => copyToClipboard("ruvethiruve74@gmail.com", "Email address")}
-            />
-            
-            <ContactRow
-              label="LinkedIn"
-              value="linkedin.com/in/ruvethikka-siree"
-              href="https://www.linkedin.com/in/ruvethikka-siree/"
-            />
-            <ContactRow
-              label="GitHub"
-              value="github.com/ruvethiruve74"
-              href="https://github.com/ruvethiruve74"
-            />
-          </div>
-        </GlassCard>
       </Reveal>
 
       

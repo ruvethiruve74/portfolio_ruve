@@ -25,38 +25,6 @@ export default function HomeSection({ profileImg, scrollTo }) {
         zIndex: 1,
       }}
     >
-      {/* Availability Status Badge */}
-      <Reveal delay={0}>
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "7px 18px",
-            borderRadius: "999px",
-            background: "rgba(16, 185, 129, 0.12)",
-            border: "1px solid rgba(52, 211, 153, 0.35)",
-            boxShadow: "0 0 16px rgba(52, 211, 153, 0.15)",
-            marginBottom: "24px",
-            fontSize: "13px",
-            fontWeight: 500,
-            color: "#6EE7B7",
-          }}
-        >
-          <span
-            style={{
-              width: "8px",
-              height: "8px",
-              borderRadius: "50%",
-              backgroundColor: "#10B981",
-              boxShadow: "0 0 8px #10B981",
-              display: "inline-block",
-              animation: "pulseGlow 2s infinite",
-            }}
-          />
-          Available for Internships & Full-Stack Roles
-        </div>
-      </Reveal>
 
       {/* Profile Image with Glowing Halo */}
       <Reveal delay={60}>

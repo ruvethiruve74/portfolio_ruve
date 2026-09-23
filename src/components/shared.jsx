@@ -232,7 +232,7 @@ export function ContactRow({ label, value, href, onCopy }) {
             onMouseEnter={(e) => (e.currentTarget.style.color = "#C9B8FF")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "#EDE9FE")}
           >
-            {value}
+            {value || label}
             <ExternalLinkIcon size={13} color="#A89FD9" />
           </a>
         ) : (

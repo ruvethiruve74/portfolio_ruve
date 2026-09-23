@@ -184,7 +184,8 @@ export default function HomeSection({ profileImg, scrollTo }) {
           </button>
 
           <a
-            href="mailto:ruvethiruve74@gmail.com?subject=Requesting%20Resume%20-%20Ruvethikka%20Sireetharan"
+            href="/Ruvethikka_CV.pdf"
+            download="Ruvethikka_CV.pdf"
             style={{
               cursor: "pointer",
               padding: "13px 26px",
@@ -212,7 +213,7 @@ export default function HomeSection({ profileImg, scrollTo }) {
             }}
           >
             <DownloadIcon size={16} color="#C9B8FF" />
-            Request Resume
+            Download Resume
           </a>
         </div>
       </Reveal>

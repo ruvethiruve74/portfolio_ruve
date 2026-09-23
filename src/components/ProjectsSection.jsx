@@ -88,9 +88,6 @@ export default function ProjectsSection({ githubUrl }) {
           <h2 className="display-font section-heading">
             Featured Projects
           </h2>
-          <p className="section-desc">
-            Demonstrated capabilities spanning end-to-end web applications, e-commerce architectures, and enterprise desktop software.
-          </p>
         </div>
       </Reveal>
 

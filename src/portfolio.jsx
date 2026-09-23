@@ -18,10 +18,11 @@ import {
 const PROFILE_IMG = profileImg;
 
 const skills = {
-  Frontend: ["React.js", "Next.js", "TypeScript", "JavaScript (ES6+)", "HTML5", "CSS3", "Tailwind CSS"],
-  Backend: ["NestJS", "PHP", "RESTful APIs", "Node.js"],
-  Database: ["MySQL", "SQL Server", "Database Architecture", "Relational Modeling"],
-  Tools: ["Git", "GitHub", "VS Code", "Figma", "Postman"],
+  "Programming Languages": ["Python","JavaScript", "TypeScript", "PHP"],
+  Frontend: ["React.js", "Next.js", "HTML5", "CSS3", "Tailwind CSS"],
+  Backend: ["Node.js", "NestJS", "REST APIs", "Express.js"],
+  Database: ["MySQL", "SQL Server", "MongoDB"],
+  Tools: ["Git", "GitHub", "VS Code", "Jira", "Postman"],
 };
 
 const GITHUB_URL = "https://github.com/ruvethiruve74";
@@ -260,25 +261,8 @@ export default function Portfolio() {
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              gap: "8px",
             }}
           >
-            <div
-              style={{
-                width: "34px",
-                height: "34px",
-                borderRadius: "10px",
-                background: "linear-gradient(135deg, #C9B8FF, #60A5FA)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 800,
-                fontSize: "14px",
-                color: "#070814",
-              }}
-            >
-              RS
-            </div>
             <span
               className="display-font"
               style={{

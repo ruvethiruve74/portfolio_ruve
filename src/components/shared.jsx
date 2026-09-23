@@ -45,8 +45,7 @@ export function RotatingRoles({
   roles = [
     "Full-Stack Developer",
     "Software Engineering Student",
-    "React & NestJS Specialist",
-    "Creative Problem Solver",
+    "testing & Quantity Assurance",
   ],
 }) {
   const [roleIndex, setRoleIndex] = useState(0);

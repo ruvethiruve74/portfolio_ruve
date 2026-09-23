@@ -5,7 +5,6 @@ import {
   GlassCard,
   ContactRow,
   MailIcon,
-  PhoneIcon,
   CheckIcon,
 } from "./shared";
 

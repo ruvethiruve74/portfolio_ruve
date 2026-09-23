@@ -91,45 +91,7 @@ export default function ProjectsSection({ githubUrl }) {
         </div>
       </Reveal>
 
-      {/* Category Tabs */}
-      <Reveal delay={80}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "10px",
-            flexWrap: "wrap",
-            marginBottom: "36px",
-          }}
-        >
-          {categories.map((cat) => {
-            const isActive = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                style={{
-                  padding: "8px 20px",
-                  borderRadius: "999px",
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  border: isActive ? "1px solid #C9B8FF" : "1px solid rgba(255, 255, 255, 0.12)",
-                  background: isActive
-                    ? "linear-gradient(135deg, rgba(201, 184, 255, 0.25), rgba(96, 165, 250, 0.25))"
-                    : "rgba(255, 255, 255, 0.04)",
-                  color: isActive ? "#FFFFFF" : "#A89FD9",
-                  boxShadow: isActive ? "0 4px 20px rgba(139, 92, 246, 0.3)" : "none",
-                  transition: "all 0.2s ease",
-                }}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
-      </Reveal>
-
+    
       {/* Projects Grid */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
         {filteredProjects.map((p, i) => (

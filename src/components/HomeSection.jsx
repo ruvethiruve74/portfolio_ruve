@@ -231,7 +231,7 @@ export default function HomeSection({ profileImg, scrollTo }) {
           </a>
 
           <a
-            href="https://www.linkedin.com/in/ruvethikka-siree/"
+            href="https://www.linkedin.com/in/ruvethikka-siree"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"

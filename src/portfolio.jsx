@@ -26,6 +26,8 @@ const skills = {
 };
 
 const GITHUB_URL = "https://github.com/ruvethiruve74";
+const LINKEDIN_URL = "https://www.linkedin.com/in/ruvethikka-siree";
+const EMAIL_ADDRESS = "ruvethi@gmail.com";
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home");
@@ -485,7 +487,7 @@ export default function Portfolio() {
 
             <p style={{ fontSize: "13.5px", color: "#C4BCE6", margin: "0 0 16px" }}>
               Reach out directly or send a message to{" "}
-              <strong style={{ color: "#F5F3FF" }}>ruvethiruve74@gmail.com</strong>
+              <strong style={{ color: "#F5F3FF" }}>{EMAIL_ADDRESS}</strong>
             </p>
 
             <form
@@ -493,7 +495,7 @@ export default function Portfolio() {
                 e.preventDefault();
                 const subject = encodeURIComponent(`Portfolio Message from ${modalForm.name || "Colleague"}`);
                 const body = encodeURIComponent(`Name: ${modalForm.name}\nEmail: ${modalForm.email}\n\nMessage:\n${modalForm.message}`);
-                window.location.href = `mailto:ruvethiruve74@gmail.com?subject=${subject}&body=${body}`;
+                window.location.href = `mailto:${EMAIL_ADDRESS}?subject=${subject}&body=${body}`;
                 setShowContactModal(false);
                 triggerToast("Opening email client...");
               }}

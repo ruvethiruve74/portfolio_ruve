@@ -90,14 +90,14 @@ export default function ContactSection({ onShowToast }) {
       <Reveal delay={80}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "28px", marginTop: "14px" }}>
           {[
-            ["Email", "mailto:ruvethi@gmail.com"],
+            ["Email", "https://mail.google.com/mail/?view=cm&fs=1&to=ruvethi@gmail.com"],
             ["GitHub", "https://github.com/ruvethiruve74"],
             ["LinkedIn", "https://www.linkedin.com/in/ruvethikka-siree/"],
           ].map(([label, href]) => (
             <a
               key={label}
               href={href}
-              target={href.startsWith("mailto:") ? "_self" : "_blank"}
+              target="_blank"
               rel="noopener noreferrer"
               style={{
                 minWidth: "120px",

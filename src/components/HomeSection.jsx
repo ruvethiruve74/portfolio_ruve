@@ -119,8 +119,10 @@ export default function HomeSection({ profileImg, scrollTo }) {
           
            
 
-          <button
-            onClick={() => scrollTo("contact")}
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=ruvethi@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               cursor: "pointer",
               padding: "13px 28px",
@@ -149,7 +151,7 @@ export default function HomeSection({ profileImg, scrollTo }) {
           >
             <MailIcon size={16} color="#C9B8FF" />
             Get in Touch
-          </button>
+          </a>
 
           <a
             href="/Ruvethikka_CV.pdf"

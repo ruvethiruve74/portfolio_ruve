@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function useReveal(threshold = 0.12) {
   const ref = useRef(null);

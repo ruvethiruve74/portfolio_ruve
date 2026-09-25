@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import profileImg from "./assets/ruve.jpeg";
 import HomeSection from "./components/HomeSection";
 import AboutSection from "./components/AboutSection";
@@ -14,8 +14,6 @@ import {
   MenuIcon,
   CloseIcon,
 } from "./components/shared";
-
-const PROFILE_IMG = profileImg;
 
 const skills = {
   "Programming Languages": ["Python","JavaScript", "TypeScript", "PHP"],
@@ -412,7 +410,7 @@ export default function Portfolio() {
       {/* Main Content Sections */}
       <main>
         <div ref={(el) => (sectionsRef.current.home = el)}>
-          <HomeSection profileImg={PROFILE_IMG} scrollTo={scrollTo} />
+          <HomeSection profileImg={profileImg} scrollTo={scrollTo} />
         </div>
         <div ref={(el) => (sectionsRef.current.about = el)}>
           <AboutSection />

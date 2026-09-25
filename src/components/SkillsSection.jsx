@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Reveal, GlassCard, CodeIcon } from "./shared";
 
 export default function SkillsSection({ skills }) {

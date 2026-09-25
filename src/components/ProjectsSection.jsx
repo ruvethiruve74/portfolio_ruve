@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Reveal, GlassCard, GithubIcon, ExternalLinkIcon } from "./shared";
 
 const enrichedProjects = [

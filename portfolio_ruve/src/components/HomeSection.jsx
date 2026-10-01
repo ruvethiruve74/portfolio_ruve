@@ -96,7 +96,7 @@ export default function HomeSection({ profileImg, scrollTo }) {
             textAlign: "center",
           }}
         >
-         Passionate about transforming ideas into innovative, scalable, and reliable software solutions that create impactful digital experiences.
+  Passionate about transforming ideas into innovative, scalable, and reliable software solutions that create impactful digital experiences.
         </p>
       </Reveal>
 
@@ -114,7 +114,6 @@ export default function HomeSection({ profileImg, scrollTo }) {
         >
           
           
-           
 
           <a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=ruvethi@gmail.com"

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Reveal, GlassCard, CodeIcon } from "./shared";
+import { Reveal, GlassCard, CodeIcon, SkillLogo } from "./shared";
 
 export default function SkillsSection({ skills }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -97,6 +97,7 @@ export default function SkillsSection({ skills }) {
                         style={{
                           display: "inline-flex",
                           alignItems: "center",
+                          gap: "8px",
                           padding: "7px 14px",
                           borderRadius: "999px",
                           fontSize: "13px",
@@ -119,7 +120,8 @@ export default function SkillsSection({ skills }) {
                           e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
                         }}
                       >
-                        {item}
+                        <SkillLogo skill={item} size={14} />
+                        <span>{item}</span>
                       </span>
                     ))}
                   </div>

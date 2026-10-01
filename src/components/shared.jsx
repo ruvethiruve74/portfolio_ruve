@@ -385,6 +385,62 @@ export function CodeIcon({ size = 16, color = "currentColor" }) {
   );
 }
 
+export function SkillLogo({ skill, size = 14, color = "currentColor" }) {
+  const normalized = String(skill || "").trim();
+  const key = normalized.toLowerCase();
+  const palette = {
+    python: { bg: "#3B82F6", fg: "#E0F2FE", text: "Py" },
+    javascript: { bg: "#FBBF24", fg: "#111827", text: "JS" },
+    typescript: { bg: "#60A5FA", fg: "#EFF6FF", text: "TS" },
+    php: { bg: "#A78BFA", fg: "#F5F3FF", text: "PHP" },
+    "react.js": { bg: "#38BDF8", fg: "#F0F9FF", text: "R" },
+    "next.js": { bg: "#111827", fg: "#F9FAFB", text: "N" },
+    "html5": { bg: "#F97316", fg: "#FFF7ED", text: "H5" },
+    "css3": { bg: "#3B82F6", fg: "#EFF6FF", text: "C3" },
+    "tailwind css": { bg: "#22D3EE", fg: "#ECFEFF", text: "TW" },
+    "node.js": { bg: "#22C55E", fg: "#ECFDF5", text: "N" },
+    nestjs: { bg: "#F43F5E", fg: "#FFF1F2", text: "N" },
+    "rest api": { bg: "#94A3B8", fg: "#F8FAFC", text: "API" },
+    "rest apis": { bg: "#94A3B8", fg: "#F8FAFC", text: "API" },
+    "express.js": { bg: "#6B7280", fg: "#F3F4F6", text: "E" },
+    mysql: { bg: "#F59E0B", fg: "#FFFBEB", text: "My" },
+    "sql server": { bg: "#2563EB", fg: "#EFF6FF", text: "SQL" },
+    mongodb: { bg: "#22C55E", fg: "#ECFDF5", text: "M" },
+    git: { bg: "#F97316", fg: "#FFF7ED", text: "G" },
+    github: { bg: "#111827", fg: "#F9FAFB", text: "GH" },
+    "vs code": { bg: "#2563EB", fg: "#EFF6FF", text: "VS" },
+    jira: { bg: "#2563EB", fg: "#EFF6FF", text: "J" },
+    postman: { bg: "#F59E0B", fg: "#FFFBEB", text: "P" },
+  };
+
+  const config = Object.entries(palette).find(([name]) => key.includes(name))?.[1] || { bg: "rgba(255,255,255,0.12)", fg: "#E2E8F0", text: normalized.slice(0, 2).toUpperCase() };
+
+  return (
+    <span
+      aria-label={skill}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: size + 4,
+        height: size + 4,
+        minWidth: size + 4,
+        borderRadius: "8px",
+        background: config.bg,
+        color: config.fg,
+        fontSize: Math.max(8, size - 4),
+        fontWeight: 800,
+        lineHeight: 1,
+        letterSpacing: "-0.04em",
+        border: "1px solid rgba(255,255,255,0.12)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
+      }}
+    >
+      {config.text}
+    </span>
+  );
+}
+
 export function SparklesIcon({ size = 16, color = "currentColor" }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

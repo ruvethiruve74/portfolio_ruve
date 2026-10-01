@@ -31,9 +31,14 @@ export default function HomeSection({ profileImg, scrollTo }) {
         <div
           style={{
             position: "relative",
-            width: "min(72vw, 360px)",
-            height: "min(58vh, 430px)",
+            width: "min(68vw, 280px)",
+            aspectRatio: "1",
             margin: "0 auto 24px",
+            overflow: "hidden",
+            borderRadius: "50%",
+            border: "1px solid rgba(196, 158, 255, 0.55)",
+            background: "rgba(255, 255, 255, 0.04)",
+            boxShadow: "0 0 36px rgba(139, 92, 246, 0.2), 0 0 72px rgba(56, 189, 248, 0.1)",
           }}
         >
           <img
@@ -42,11 +47,9 @@ export default function HomeSection({ profileImg, scrollTo }) {
             style={{
               width: "100%",
               height: "100%",
-              borderRadius: 0,
-              objectFit: "contain",
+              objectFit: "cover",
+              objectPosition: "center 30%",
               display: "block",
-              border: "none",
-              mixBlendMode: "darken",
             }}
           />
         </div>

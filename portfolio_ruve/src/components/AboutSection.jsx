@@ -35,7 +35,8 @@ export default function AboutSection() {
               </h3>
             </div>
             <p style={{ fontSize: "15px", lineHeight: 1.85, color: "#C4BCE6", margin: 0 }}>
-            I’m a passionate Software Engineering student and aspiring Full-Stack Developer with a strong interest in building innovative, reliable, and user-friendly software solutions. I’m also interested in Software Testing and Quality Assurance, and I’m continuously learning and improving my skills to grow as a well-rounded software professional.
+              I’m a Software Engineering student with a passion for full-stack development and building innovative, reliable, and user-friendly digital solutions. 
+              I’m especially interested in software testing and quality assurance, and I’m constantly learning and refining my skills to grow into a well-rounded software professional.
             </p>
             
           </GlassCard>

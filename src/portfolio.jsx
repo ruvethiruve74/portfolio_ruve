@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import profileImg from "./assets/ruve.jpeg";
+import profileImg from "./assets/ruve1.png";
 import HomeSection from "./components/HomeSection";
 import AboutSection from "./components/AboutSection";
 import SkillsSection from "./components/SkillsSection";

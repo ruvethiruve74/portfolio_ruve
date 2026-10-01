@@ -34,10 +34,13 @@ export default function AboutSection() {
                 Driven by Passion & Innovation
               </h3>
             </div>
-            <p style={{ fontSize: "15px", lineHeight: 1.85, color: "#C4BCE6", margin: 0 }}>
-              I’m a Software Engineering student with a passion for full-stack development and building innovative, reliable, and user-friendly digital solutions. 
-              I’m especially interested in software testing and quality assurance, and I’m constantly learning and refining my skills to grow into a well-rounded software professional.
-            </p>
+          <p style={{ fontSize: "15px", lineHeight: 1.85, color: "#C4BCE6", margin: 0 }}>
+  I’m a Software Engineering student passionate about full-stack development and building innovative, reliable, and user-friendly digital solutions.
+</p>
+
+<p style={{ fontSize: "15px", lineHeight: 1.85, color: "#C4BCE6", margin: 0 }}>
+  I’m also interested in Software Testing and Quality Assurance, continuously learning and improving to become a well-rounded software professional.
+</p>
             
           </GlassCard>
         </Reveal>
